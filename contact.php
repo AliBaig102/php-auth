@@ -1,6 +1,5 @@
 <?php
-require_once "utils/functions.php";
-session_start();
+require_once 'utils/functions.php';
 ?>
 <!doctype html>
 <html lang="en">
@@ -11,7 +10,7 @@ session_start();
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-    <title>Authentication System : Home Page</title>
+    <title>Authentication System : Contact Page</title>
 </head>
 <body>
 <?php

@@ -1,29 +1,26 @@
 <?php
-require '../vendor/autoload.php';
-require_once '../vendor/phpmailer/phpmailer/src/Exception.php';
-require_once '../vendor/phpmailer/phpmailer/src/PHPMailer.php';
-require_once '../vendor/phpmailer/phpmailer/src/SMTP.php';
+require_once dirname(__DIR__)."/constant/constant.php";
+require_once dirname(__DIR__).'/vendor/phpmailer/phpmailer/src/Exception.php';
+require_once dirname(__DIR__).'/vendor/phpmailer/phpmailer/src/PHPMailer.php';
+require_once dirname(__DIR__).'/vendor/phpmailer/phpmailer/src/SMTP.php';
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
-use Dotenv\Dotenv;
-
-$dotenv = Dotenv::createImmutable(dirname(__DIR__));
-$dotenv->load();
 
 function sendEmail($to, $subject, $message): bool
 {
+    global $application_name,$email_host,$email_port,$email_host_user,$email_host_password;
     $mail = new PHPMailer(true);
     try {
         //Server settings
         $mail->SMTPDebug = 2;
         $mail->isSMTP();
-        $mail->Host = $_ENV['EMAIL_HOST'];
+        $mail->Host = $email_host;
         $mail->SMTPAuth = true;
-        $mail->Username = $_ENV['EMAIL_HOST_USER'];
-        $mail->Password = $_ENV['EMAIL_HOST_PASSWORD'];
+        $mail->Username = $email_host_user;
+        $mail->Password = $email_host_password;
         $mail->SMTPSecure = 'tls';
-        $mail->Port = $_ENV['EMAIL_PORT'];
+        $mail->Port = $email_port;
         $mail->SMTPOptions = array(
             'ssl' => array(
                 'verify_peer' => false,
@@ -32,7 +29,7 @@ function sendEmail($to, $subject, $message): bool
             )
         );
         //Recipients
-        $mail->setFrom($_ENV['EMAIL_HOST_USER'], 'Auth');
+        $mail->setFrom($email_host_user, $application_name);
         $mail->addAddress($to);
         //Content
         $mail->isHTML(true);
